@@ -11,7 +11,7 @@ export const PARTNERS = [
         name: "Git Out Expeditions",
         image: "/assets/images/git-logo.png",
         featured: false,
-        description: "Join Git Out Expeditions to explore new horizons with a group of other adventurers!"
+        description: "Join Git Out Expeditions to explore new horizons with a group of other adventurers!",
     },
     {
         id: 2,

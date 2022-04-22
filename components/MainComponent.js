@@ -1,116 +1,3 @@
-// import React, { Component } from 'react';
-// import Home from './HomeComponent';
-// import Directory from './DirectoryComponent';
-// import CampsiteInfo from './CampsiteInfoComponent';
-// import Constants from 'expo-constants';
-// import { View, Platform } from 'react-native';
-// import { createStackNavigator } from 'react-navigation-stack';
-// import { createDrawerNavigator } from 'react-navigation-drawer';
-// import { createAppContainer } from 'react-navigation';
-// import About from './AboutComponent';
-// import Contact from './ContactComponent';
-
-// const DirectoryNavigator = createStackNavigator(
-//     {
-//         Directory: { screen: Directory },
-//         CampsiteInfo: { screen: CampsiteInfo }
-//     },
-//     {
-//         initialRouteName: 'Directory',
-//         defaultNavigationOptions: {
-//             headerStyle: {
-//                 backgroundColor: '#5637DD'
-//             },
-//             headerTintColor: '#fff',
-//             headerTitleStyle: {
-//                 color: '#fff'
-//             }
-//         }
-//     }
-// );
-
-// const HomeNavigator = createStackNavigator(
-//     {
-//         Home: { screen: Home },
-//     },
-//     {
-//         defaultNavigationOptions: {
-//             headerStyle: {
-//                 backgroundColor: '#5637DD'
-//             },
-//             headerTintColor: '#fff',
-//             headerTitleStyle: {
-//                 color: '#fff'
-//             }
-//         }
-//     }
-// );
-
-// const ContactNavigator = createStackNavigator(
-//     {
-//         Contact: { screen: Contact }
-//     },
-//     {
-//         initialRouteName: 'Contact',
-//         defaultNavigationOptions: {
-//             headerStyle: {
-//                 backgroundColor: '#5637DD'
-//             },
-//             headerTintColor: '#fff',
-//             headerTitleStyle: {
-//                 color: '#fff'
-//             }
-//         }
-//     }
-// );
-
-// const AboutNavigator = createStackNavigator(
-//     {
-//         About: { screen: About }
-//     },
-//     {
-//         initialRouteName: 'About',
-//         defaultNavigationOptions: {
-//             headerStyle: {
-//                 backgroundColor: '#5637DD'
-//             },
-//             headerTintColor: '#fff',
-//             headerTitleStyle: {
-//                 color: '#fff'
-//             }
-//         }
-//     }
-// );
-
-// const MainNavigator = createDrawerNavigator(
-//     {
-//         Home: { screen: HomeNavigator },
-//         Directory: { screen: DirectoryNavigator },
-//         About: {screen: AboutNavigator},
-//         Contact: {screen: ContactNavigator}
-//     },
-//     {
-//         drawerBackgroundColor: '#CEC8FF'
-//     }
-// );
-
-// const AppNavigator = createAppContainer(MainNavigator)
-
-// class Main extends Component {
-//     render() {
-//         return (
-//             <View style={{
-//                 flex: 1,
-//                 paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight
-//             }}>
-//                 <AppNavigator />
-//             </View>
-//         );
-//     }
-// }
-
-// export default Main;
-
 import React, { Component } from 'react';
 import Home from './HomeComponent';
 import Directory from './DirectoryComponent';
@@ -126,6 +13,8 @@ import { Icon } from 'react-native-elements';
 import  SafeAreaView  from 'react-native-safe-area-view';
 import { connect } from 'react-redux';
 import {fetchCampsites, fetchComments, fetchPromotions, fetchPartners} from '../redux/ActionCreators';
+import Reservation from './ReservationComponent'; 
+import Favorites from './FavoritesComponent';
 
 const mapDispatchToProps = {
   fetchCampsites,
@@ -184,6 +73,53 @@ const ContactNavigator = createStackNavigator(
           onPress = {() => navigation.toggleDrawer()}
           />
     })
+  }
+);
+
+
+const ReservationNavigator = createStackNavigator(
+  {
+      Reservation: { screen: Reservation }
+  },
+  {
+      defaultNavigationOptions: ({navigation}) => ({
+          headerStyle: {
+              backgroundColor: '#5637DD'
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+              color: '#fff'
+          },
+          headerLeft: <Icon
+              name='tree'
+              type='font-awesome'
+              iconStyle={styles.stackIcon}
+              onPress={() => navigation.toggleDrawer()}
+          />
+      })
+  }
+);
+
+const FavoritesNavigator = createStackNavigator(
+  {
+      Favorites: { screen: Favorites }
+  },
+  {
+      defaultNavigationOptions: ({navigation}) => ({
+          headerStyle: {
+              backgroundColor: '#5637DD'
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+              color: '#fff'
+          },
+          headerLeft: <Icon
+              name='heart'
+              type='font-awesome'
+              iconStyle={styles.stackIcon}
+              onPress={() => navigation.toggleDrawer()}
+          />
+      })
   }
 );
 
@@ -279,6 +215,34 @@ const MainNavigator = createDrawerNavigator(
         )
       } 
     },
+    Reservation: {
+      screen: ReservationNavigator,
+      navigationOptions: {
+          drawerLabel: 'Reserve Campsite',
+          drawerIcon: ({tintColor}) => (
+              <Icon
+                  name='tree'
+                  type='font-awesome'
+                  size={24}
+                  color={tintColor}
+              />
+          )
+      }
+  },
+  Favorites: {
+    screen: FavoritesNavigator,
+    navigationOptions: {
+        drawerLabel: 'My Favorites',
+        drawerIcon: ({tintColor}) => (
+            <Icon
+                name='heart'
+                type='font-awesome'
+                size={24}
+                color={tintColor}
+            />
+        )
+    }
+},
     About: { screen: AboutNavigator,
       navigationOptions: {
         drawerLabel: 'Abour Us',
